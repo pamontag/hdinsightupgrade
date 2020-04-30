@@ -1,0 +1,29 @@
+{
+    "configuration": {
+        "nodeschedules": [
+            {
+                "node": "hn0",
+                "schedule": "18:00"
+            },
+            {
+                "node": "hn1",
+                "schedule": "18:30"
+            },
+            {
+                "node": "wn0",
+                "schedule": "19:00"
+            },
+            {
+                "node": "wn1",
+                "schedule": "19:30"
+            }
+        
+        ],
+        "reboot": {
+            "restart": 0
+        },
+        "updates": {
+            "updatetype": "kernel"
+        }
+    }
+}
