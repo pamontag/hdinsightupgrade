@@ -16,6 +16,10 @@
             {
                 "node": "wn1",
                 "schedule": "19:30"
+            },
+            {
+                "node": "PAMONTAG-BOOK.europe.corp.microsoft.com",
+                "schedule": "17:00"
             }
         
         ],
@@ -23,7 +27,8 @@
             "restart": 0
         },
         "updates": {
-            "updatetype": "kernel"
+            "updatetype": "kernel",
+            "listonly": 1
         }
     }
 }
