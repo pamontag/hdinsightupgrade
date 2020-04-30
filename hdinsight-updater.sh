@@ -18,16 +18,16 @@ write_log() {
 get_configuration_value() {
     if [[ $1 == "updates" ]]
     then
-        conf_value=$(echo $CONF | ./jq-linux64 --arg pattern "$2" '.configuration | .updates | .[$pattern]')   
+        conf_value=$(echo $CONF | ./jq-linux64 -r --arg pattern "$2" '.configuration | .updates | .[$pattern]')   
     elif [[ $1 == "reboot" ]]
     then
-        conf_value=$(echo $CONF | ./jq-linux64 --arg pattern "$2" '.configuration | .reboot | .[$pattern]') 
+        conf_value=$(echo $CONF | ./jq-linux64 -r --arg pattern "$2" '.configuration | .reboot | .[$pattern]') 
     fi
     echo $conf_value
 }
 
 get_node_schedule() {
-    node_schedule=$(echo $CONF | ./jq-linux64 --arg NODE "$1" '.configuration.nodeschedules[] | select(.node == $NODE) | .schedule' )
+    node_schedule=$(echo $CONF | ./jq-linux64 -r --arg NODE "$1" '.configuration.nodeschedules[] | select(.node == $NODE) | .schedule' )
     echo "$node_schedule"
 }
 
@@ -105,7 +105,24 @@ write_log "Only list updates: $LISTONLY"
 write_log "Required restart: $RESTART"
 write_log "Node $hostname scheduled for operation at $nodeschedule"
  
+#WAIT FOR SCHEDULED TIME
 
+write_log "Checking if current time $current_time_in_HH_MM is equal to scheduled time $nodeschedule..."
+while [[ "$current_time_in_HH_MM" != $nodeschedule ]]
+do
+    write_log "Sleep 60 seconds..."
+    sleep 60
+    current_time_in_HH_MM=$(date +"%H:%M")
+    write_log "Checking if current time $current_time_in_HH_MM is equal to scheduled time $nodeschedule..."
+done
 
- 
+write_log "Starting patching operation at $current_time_in_HH_MM"
+
+#CLUSTER HEALTH CHECK
+
+#DO PATCHING
+
+#DO REBOOT
+
+#FIN
 
